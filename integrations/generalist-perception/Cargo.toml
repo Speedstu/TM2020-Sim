@@ -1,0 +1,26 @@
+[package]
+name = "tm2020-generalist-perception"
+version = "0.38.0"
+edition = "2024"
+license = "GPL-3.0-or-later"
+publish = false
+
+[workspace]
+
+[dependencies]
+anyhow = "1"
+serde_json = "1"
+gearbox-engine = { path = "../../third_party/gearbox/packages/engine" }
+gearbox-world = { path = "../../third_party/gearbox/packages/world" }
+gearbox-gbx = { path = "../../third_party/gearbox/packages/gbx" }
+
+[patch.crates-io]
+lzokay-native = { path = "../fast-training/lzo" }
+
+[profile.release]
+lto = "thin"
+codegen-units = 1
+
+[[bin]]
+name = "tm2020-map-perception"
+path = "main.rs"

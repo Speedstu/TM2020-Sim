@@ -1,0 +1,20 @@
+[package]
+name = "tm2020-training-metadata"
+version = "0.44.0"
+edition = "2024"
+license = "GPL-3.0-or-later"
+publish = false
+
+[workspace]
+
+[dependencies]
+anyhow = "1"
+serde_json = "1"
+gearbox-gbx = { path = "../../third_party/gearbox/packages/gbx" }
+
+[patch.crates-io]
+lzokay-native = { path = "../fast-training/lzo" }
+
+[profile.release]
+lto = "thin"
+codegen-units = 1

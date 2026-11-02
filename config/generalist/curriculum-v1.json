@@ -1,0 +1,513 @@
+{
+  "schema": "tm2020_generalist_curriculum_design_v1",
+  "status": "design_and_route_free_perception_prototype_not_trained_generalist",
+  "researchedOn": "2026-10-29",
+  "singleSharedPolicy": true,
+  "policyInputsIncludeMapUid": false,
+  "expertReplayAtInference": false,
+  "expertReplayOnlyForTrainingDemonstrations": true,
+  "architectureHypothesis": {
+    "mapEncoder": "local geometry and checkpoint graph encoder",
+    "memory": "recurrent driving state",
+    "policy": "one shared actor-critic conditioned on current car and effects",
+    "actions": [
+      "steering",
+      "throttle",
+      "brake"
+    ],
+    "recovery": "explicit discrete recovery head or separately measured runtime recovery protocol"
+  },
+  "specializeWithoutForgetting": {
+    "keepSingleCheckpoint": true,
+    "preserveDiverseTrainingMixture": true,
+    "regressionTestAllSupportedMechanicFamilies": true,
+    "testMapsNeverUsedForSelection": true
+  },
+  "curriculum": [
+    {
+      "id": "racing_lines",
+      "stage": 0,
+      "requiredSignals": "road geometry; upcoming curvature; speed; exit width",
+      "benchmark": "finish rate and time on unseen turns",
+      "sources": [
+        "jnic_general",
+        "wirtual_basic"
+      ],
+      "learnedAndQualified": false,
+      "evidenceLevel": "source_indexed_requires_physics_experiment"
+    },
+    {
+      "id": "throttle_release_brake",
+      "stage": 0,
+      "requiredSignals": "independent steering, throttle and brake controls",
+      "benchmark": "successful turns and acceleration recovery",
+      "sources": [
+        "jnic_general"
+      ],
+      "learnedAndQualified": false,
+      "evidenceLevel": "source_indexed_requires_physics_experiment"
+    },
+    {
+      "id": "gears",
+      "stage": 1,
+      "requiredSignals": "rpm; gear; shifting state; surface; slip history",
+      "benchmark": "exit speed and successful gear shifts",
+      "sources": [
+        "jnic_gears"
+      ],
+      "learnedAndQualified": false,
+      "evidenceLevel": "source_indexed_requires_physics_experiment"
+    },
+    {
+      "id": "smoothsteer_noslide",
+      "stage": 1,
+      "requiredSignals": "analogue steering; wheel slip; contact; car model",
+      "benchmark": "time and speed retention across surfaces",
+      "sources": [
+        "jnic_general",
+        "nadeo_desert"
+      ],
+      "learnedAndQualified": false,
+      "evidenceLevel": "source_indexed_requires_physics_experiment"
+    },
+    {
+      "id": "road_drift",
+      "stage": 1,
+      "requiredSignals": "brake; steering; lateral speed; wheel contacts",
+      "benchmark": "repeatable turn completion and exit speed",
+      "sources": [
+        "jnic_general",
+        "wirtual_basic"
+      ],
+      "learnedAndQualified": false,
+      "evidenceLevel": "source_indexed_requires_physics_experiment"
+    },
+    {
+      "id": "neoslide",
+      "stage": 2,
+      "requiredSignals": "low-speed turning; brake timing; slip history",
+      "benchmark": "tight-turn time without rewarding slip itself",
+      "sources": [
+        "jnic_general"
+      ],
+      "learnedAndQualified": false,
+      "evidenceLevel": "source_indexed_requires_physics_experiment"
+    },
+    {
+      "id": "speedslide_road",
+      "stage": 2,
+      "requiredSignals": "speed; lateral velocity; slip; surface; projected route",
+      "benchmark": "greater route progress at matched entry state",
+      "sources": [
+        "mudda_sd",
+        "reddit_sd"
+      ],
+      "learnedAndQualified": false,
+      "evidenceLevel": "source_indexed_requires_physics_experiment"
+    },
+    {
+      "id": "speedslide_dirt_grass_plastic",
+      "stage": 2,
+      "requiredSignals": "surface; gear; slip; analogue input",
+      "benchmark": "forward progress gain against matched controls",
+      "sources": [
+        "jnic_general",
+        "reddit_sd"
+      ],
+      "learnedAndQualified": false,
+      "evidenceLevel": "source_indexed_requires_physics_experiment"
+    },
+    {
+      "id": "s4d_autoslide_transitions",
+      "stage": 2,
+      "requiredSignals": "brake; bank; landing; surface transition",
+      "benchmark": "slide initiation and exit time",
+      "sources": [
+        "mudda_sd"
+      ],
+      "learnedAndQualified": false,
+      "evidenceLevel": "source_indexed_requires_physics_experiment"
+    },
+    {
+      "id": "airbrake",
+      "stage": 1,
+      "requiredSignals": "airborne state; angular velocity; brake; model",
+      "benchmark": "landing pose, speed and next-section time",
+      "sources": [
+        "jnic_general",
+        "wirtual_basic"
+      ],
+      "learnedAndQualified": false,
+      "evidenceLevel": "source_indexed_requires_physics_experiment"
+    },
+    {
+      "id": "air_control_rotation_cancel",
+      "stage": 1,
+      "requiredSignals": "angular velocity; steering; car model",
+      "benchmark": "stable landings without assuming universal axis behavior",
+      "sources": [
+        "jnic_general"
+      ],
+      "learnedAndQualified": false,
+      "evidenceLevel": "source_indexed_requires_physics_experiment"
+    },
+    {
+      "id": "airtime_reduction_ride",
+      "stage": 2,
+      "requiredSignals": "upcoming ramp; road normal; vertical speed; projected landing",
+      "benchmark": "section time including landing",
+      "sources": [
+        "jnic_general"
+      ],
+      "learnedAndQualified": false,
+      "evidenceLevel": "source_indexed_requires_physics_experiment"
+    },
+    {
+      "id": "landings",
+      "stage": 1,
+      "requiredSignals": "contact order; suspension; slope; velocity",
+      "benchmark": "speed retention and stability",
+      "sources": [
+        "jnic_general"
+      ],
+      "learnedAndQualified": false,
+      "evidenceLevel": "source_indexed_requires_physics_experiment"
+    },
+    {
+      "id": "banking_sausage",
+      "stage": 2,
+      "requiredSignals": "cross-section; surface normal; wheel loads; slip",
+      "benchmark": "turn completion and exit speed",
+      "sources": [
+        "jnic_general"
+      ],
+      "learnedAndQualified": false,
+      "evidenceLevel": "source_indexed_requires_physics_experiment"
+    },
+    {
+      "id": "ice_slides",
+      "stage": 2,
+      "requiredSignals": "car heading versus velocity; angular rate; contacts; surface",
+      "benchmark": "turn finish and avoidance of spinout",
+      "sources": [
+        "birdie_ice",
+        "nadeo_ice_2023"
+      ],
+      "learnedAndQualified": false,
+      "evidenceLevel": "source_indexed_requires_physics_experiment"
+    },
+    {
+      "id": "ice_slideout_recovery",
+      "stage": 3,
+      "requiredSignals": "tyre state; slip; control history",
+      "benchmark": "recovery time and finish probability",
+      "sources": [
+        "nadeo_ice_2023"
+      ],
+      "learnedAndQualified": false,
+      "evidenceLevel": "source_indexed_requires_physics_experiment"
+    },
+    {
+      "id": "bobsleigh",
+      "stage": 2,
+      "requiredSignals": "channel cross-section; normal; speed; heading",
+      "benchmark": "time through unseen bobsleigh turns",
+      "sources": [
+        "birdie_ice",
+        "nadeo_ice_water"
+      ],
+      "learnedAndQualified": false,
+      "evidenceLevel": "source_indexed_requires_physics_experiment"
+    },
+    {
+      "id": "wet_icy_tyres",
+      "stage": 2,
+      "requiredSignals": "per-wheel effects and timers; transition surface",
+      "benchmark": "post-transition control and section time",
+      "sources": [
+        "nadeo_ice_water"
+      ],
+      "learnedAndQualified": false,
+      "evidenceLevel": "source_indexed_requires_physics_experiment"
+    },
+    {
+      "id": "water_bounces",
+      "stage": 2,
+      "requiredSignals": "water level; attitude; wheel state; vertical speed",
+      "benchmark": "section time and landing reliability",
+      "sources": [
+        "nadeo_ice_water"
+      ],
+      "learnedAndQualified": false,
+      "evidenceLevel": "source_indexed_requires_physics_experiment"
+    },
+    {
+      "id": "plastic_transitions",
+      "stage": 2,
+      "requiredSignals": "wheel state; contact surface; slip",
+      "benchmark": "section time, not fixed steering percentages",
+      "sources": [
+        "reddit_sd"
+      ],
+      "learnedAndQualified": false,
+      "evidenceLevel": "source_indexed_requires_physics_experiment"
+    },
+    {
+      "id": "reactor_up_down",
+      "stage": 3,
+      "requiredSignals": "effect state; direction; expiry; road normal; airborne geometry",
+      "benchmark": "landing reachability and time",
+      "sources": [
+        "jnic_general"
+      ],
+      "learnedAndQualified": false,
+      "evidenceLevel": "source_indexed_requires_physics_experiment"
+    },
+    {
+      "id": "boost_engineoff_cruise_nobrake",
+      "stage": 3,
+      "requiredSignals": "gameplay gate flags and durations; speed; controllability",
+      "benchmark": "successful sections for each allowed control mode",
+      "sources": [],
+      "learnedAndQualified": false,
+      "evidenceLevel": "research_backlog"
+    },
+    {
+      "id": "wallride_loop",
+      "stage": 2,
+      "requiredSignals": "3D road normals; ray coverage; gravity direction",
+      "benchmark": "unseen 3D section completion",
+      "sources": [
+        "reddit_fullspeed"
+      ],
+      "learnedAndQualified": false,
+      "evidenceLevel": "source_indexed_requires_physics_experiment"
+    },
+    {
+      "id": "snow_rally_desert",
+      "stage": 3,
+      "requiredSignals": "model ID; tyre contact; slip; steering scale; model-specific effects",
+      "benchmark": "per-model finish rates and transfer",
+      "sources": [
+        "nadeo_desert"
+      ],
+      "learnedAndQualified": false,
+      "evidenceLevel": "source_indexed_requires_physics_experiment"
+    },
+    {
+      "id": "car_switches",
+      "stage": 3,
+      "requiredSignals": "present and upcoming model; gate effects; velocity",
+      "benchmark": "stable transitions and continuation",
+      "sources": [
+        "nadeo_desert"
+      ],
+      "learnedAndQualified": false,
+      "evidenceLevel": "source_indexed_requires_physics_experiment"
+    },
+    {
+      "id": "route_navigation",
+      "stage": 0,
+      "requiredSignals": "GBX geometry graph; checkpoint rules; visited checkpoints; short memory",
+      "benchmark": "zero-shot course completion without expert line",
+      "sources": [],
+      "learnedAndQualified": false,
+      "evidenceLevel": "research_backlog"
+    },
+    {
+      "id": "checkpoint_laps_recovery",
+      "stage": 1,
+      "requiredSignals": "validity; lap; progress; respawn state",
+      "benchmark": "valid finish and time including recoveries",
+      "sources": [
+        "nadeo_clones"
+      ],
+      "learnedAndQualified": false,
+      "evidenceLevel": "source_indexed_requires_physics_experiment"
+    },
+    {
+      "id": "clone_dynamic_obstacles",
+      "stage": 4,
+      "requiredSignals": "relative motion of nearby entities and collision state",
+      "benchmark": "collision avoidance and valid laps",
+      "sources": [
+        "nadeo_clones"
+      ],
+      "learnedAndQualified": false,
+      "evidenceLevel": "source_indexed_requires_physics_experiment"
+    },
+    {
+      "id": "bugslide",
+      "stage": 4,
+      "requiredSignals": "large slip; direction; tyre state; brake timing",
+      "benchmark": "net section benefit and valid checkpoints",
+      "sources": [
+        "jnic_general"
+      ],
+      "learnedAndQualified": false,
+      "evidenceLevel": "source_indexed_requires_physics_experiment"
+    },
+    {
+      "id": "backwards_speedslides",
+      "stage": 4,
+      "requiredSignals": "signed forward speed; opposite orientation; slip",
+      "benchmark": "valid route progress rather than raw speed",
+      "sources": [],
+      "learnedAndQualified": false,
+      "evidenceLevel": "research_backlog"
+    },
+    {
+      "id": "wallbang_uber_bounce",
+      "stage": 4,
+      "requiredSignals": "contact normal; impact timing; angular velocity",
+      "benchmark": "repeatability and total time, official physics confirmation",
+      "sources": [],
+      "learnedAndQualified": false,
+      "evidenceLevel": "research_backlog"
+    },
+    {
+      "id": "cuts_shortcuts",
+      "stage": 4,
+      "requiredSignals": "reachable surfaces; checkpoint constraints; landing dynamics",
+      "benchmark": "valid unseen-map finish without reference trajectory",
+      "sources": [],
+      "learnedAndQualified": false,
+      "evidenceLevel": "research_backlog"
+    },
+    {
+      "id": "quantum_zoop_niche_kacky",
+      "stage": 5,
+      "requiredSignals": "mechanic-specific physical evidence still required",
+      "benchmark": "not a claimed capability; reproduce before training",
+      "sources": [],
+      "learnedAndQualified": false,
+      "evidenceLevel": "research_backlog"
+    },
+    {
+      "id": "legacy_ice_water_wiggles",
+      "stage": null,
+      "requiredSignals": "current build regression tests",
+      "benchmark": "historical behavior must not be rewarded",
+      "sources": [
+        "nadeo_ice_water",
+        "nadeo_ice_2023"
+      ],
+      "learnedAndQualified": false,
+      "evidenceLevel": "source_indexed_requires_physics_experiment"
+    }
+  ],
+  "sources": [
+    {
+      "id": "jnic_general",
+      "type": "YouTube creator description and chapter index",
+      "date": "2021-04-13",
+      "url": "https://www.youtube.com/watch?v=1tkVQ2uL7Iw",
+      "note": "Useful taxonomy; old ice/reactor advice requires current-build validation"
+    },
+    {
+      "id": "jnic_gears",
+      "type": "YouTube creator description",
+      "date": "2023-05-01",
+      "url": "https://www.youtube.com/watch?v=Sv_yP0z4ioM",
+      "note": "Gears guide; numerical shift boundaries must be measured by car and surface"
+    },
+    {
+      "id": "wirtual_basic",
+      "type": "Official Trackmania tutorial linking creator video",
+      "date": null,
+      "url": "https://www.trackmania.com/clubs/607/news/31437?lang=en",
+      "note": "Essential techniques; not a full physics specification"
+    },
+    {
+      "id": "mudda_sd",
+      "type": "Creator video linked by first-hand community discussion",
+      "date": null,
+      "url": "https://www.youtube.com/watch?v=4nka1MZiudI",
+      "note": "Source link identified; direct video fetch unavailable"
+    },
+    {
+      "id": "birdie_ice",
+      "type": "YouTube creator description and chapter index",
+      "date": "2021-08-12",
+      "url": "https://www.youtube.com/watch?v=GMoW80FWjhc",
+      "note": "Pre-2022 ice; historic wiggle advice must not become a current training target"
+    },
+    {
+      "id": "reddit_fullspeed",
+      "type": "Discussion including guide creator",
+      "date": "2023-06-25",
+      "url": "https://www.reddit.com/r/TrackMania/comments/14ih3fb/",
+      "note": "Swordie fullspeed guide; community feedback is not a physics oracle"
+    },
+    {
+      "id": "reddit_sd",
+      "type": "First-hand community discussion",
+      "date": "2025-01-07",
+      "url": "https://www.reddit.com/r/TrackMania/comments/1hvoxv5/",
+      "note": "Disagreeing speed thresholds and speculative explanations are not adopted as constants"
+    },
+    {
+      "id": "nadeo_ice_water",
+      "type": "Official patch announcement",
+      "date": "2022-09-27",
+      "url": "https://www.trackmania.com/news/7126",
+      "note": "Water and ice wiggle gains changed in October 2022"
+    },
+    {
+      "id": "nadeo_ice_2023",
+      "type": "Official changelog",
+      "date": "2023-07-01",
+      "url": "https://www.trackmania.com/news/7590?lang=en",
+      "note": "Further ice behavior corrections"
+    },
+    {
+      "id": "nadeo_desert",
+      "type": "Official changelog",
+      "date": "2024-05-22",
+      "url": "https://www.trackmania.com/news/8097",
+      "note": "Desert car, gate fixes and analog input fixes"
+    },
+    {
+      "id": "nadeo_clones",
+      "type": "Official changelog",
+      "date": "2026-01-27",
+      "url": "https://www.trackmania.com/news/8952",
+      "note": "Clone collisions and multi-lap events require dynamic observations"
+    },
+    {
+      "id": "tmrl",
+      "type": "Maintainer documentation",
+      "date": null,
+      "url": "https://github.com/trackmania-rl/tmrl",
+      "note": "Geometry/vision control reference; its integration is not the local SDK"
+    },
+    {
+      "id": "trackmaniarl",
+      "type": "Maintainer documentation",
+      "date": null,
+      "url": "https://github.com/TrackmaniaRL/TrackmaniaRL",
+      "note": "Explicitly says its selected assisted demo is not proof of generalization"
+    },
+    {
+      "id": "linesight",
+      "type": "Maintainer documentation",
+      "date": null,
+      "url": "https://github.com/Linesight-RL/linesight",
+      "note": "TMNF records and reference-line workflows do not establish TM2020 unseen-map success"
+    },
+    {
+      "id": "generalization",
+      "type": "Primary research abstract",
+      "date": "2019",
+      "url": "https://proceedings.mlr.press/v97/cobbe19a.html",
+      "note": "Distinct procedurally generated train/test levels expose RL overfitting"
+    }
+  ],
+  "releaseGates": [
+    "no expert trajectory required on a new map",
+    "same observation and action contract in simulator and live SDK",
+    "one frozen checkpoint on disjoint heldout map families",
+    "publish DNF and respawn-inclusive time, per style and car",
+    "official physics comparisons for each newly claimed mechanic"
+  ]
+}

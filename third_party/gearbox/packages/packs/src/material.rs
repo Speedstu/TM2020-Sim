@@ -1,0 +1,172 @@
+use anyhow::{Context, Result, bail};
+use gearbox_gbx::reader::Reader;
+
+#[derive(Clone, Copy, Debug, PartialEq, Eq, Hash)]
+pub struct MaterialIds {
+    pub surface: u8,
+    pub gameplay: u8,
+}
+
+pub fn material_ids(buf: &[u8]) -> Result<MaterialIds> {
+    let w = 0x09079017u32.to_le_bytes();
+    let p = buf.windows(4).position(|x| x == w).context("material without chunk 0x09079017")?;
+    let v = u32::from_le_bytes(buf.get(p + 4..p + 8).context("truncated")?.try_into().unwrap());
+    if !(1..=16).contains(&v) {
+        bail!("material chunk 0x09079017 version {v}");
+    }
+    Ok(MaterialIds { surface: buf[p + 8], gameplay: buf[p + 9] })
+}
+
+pub struct UserMaterial {
+    pub ids: MaterialIds,
+    pub link: Option<String>,
+    pub has_parameters: bool,
+}
+
+pub fn user_material(buf: &[u8], start: usize) -> Result<UserMaterial> {
+    let mut r = Reader::new(buf);
+    r.skip(start)?;
+    anyhow::ensure!(r.u32()? == 0x090fd000, "user material chunk");
+    let version = r.u32()?;
+    anyhow::ensure!((8..=11).contains(&version), "user material version {version}");
+    let linked = version < 11 || r.bool8()?;
+    crate::crystal::id(&mut r)?;
+    crate::crystal::id(&mut r)?;
+    r.string()?;
+    let surface = r.u8()?;
+    let gameplay = if version >= 10 { r.u8()? } else { 0 };
+    let link = if linked && version >= 9 {
+        Some(r.string()?).filter(|s| !s.is_empty()).map(|link| material_link_path(&link))
+    } else {
+        crate::crystal::id(&mut r)?;
+        None
+    };
+    let has_parameters = r.len()? != 0;
+    Ok(UserMaterial { ids: MaterialIds { surface, gameplay }, link, has_parameters })
+}
+
+pub fn material_link_path(link: &str) -> String {
+    if link.to_ascii_lowercase().ends_with(".gbx") {
+        link.to_owned()
+    } else if link.contains(['\\', '/']) {
+        format!("{link}.Material.Gbx")
+    } else {
+        format!("Stadium\\Media\\Material\\{link}.Material.Gbx")
+    }
+}
+
+#[derive(Clone, Debug, PartialEq)]
+pub struct Modifier {
+    pub skin: Option<String>,
+    pub inline_skinned: Vec<(String, String)>,
+    pub folder: String,
+}
+
+pub fn modifier(buf: &[u8], path: &str) -> Result<Modifier> {
+    let layout = crate::nodes::layout(buf)?;
+    let node =
+        layout.nodes.iter().find(|node| node.class_id == 0x0915d000).context("no material modifier")?;
+    modifier_at(buf, &layout, path, node.start)
+}
+
+pub fn modifier_at(buf: &[u8], layout: &crate::nodes::Layout, path: &str, start: usize) -> Result<Modifier> {
+    let mut r = Reader::new(buf);
+    r.skip(start)?;
+    anyhow::ensure!(r.u32()? == 0x0915d000, "material modifier chunk");
+    let ctx = crate::prefab::Ctx { buf, layout, path };
+    let mut inline_skinned = Vec::new();
+    let skin = ctx.noderef(&mut r, |c, r, _| {
+        let start = r.pos();
+        c.skip_node(r)?;
+        inline_skinned = material_paths(&buf[start..r.pos()]);
+        Ok(())
+    })?;
+    let skin = match skin {
+        crate::prefab::NodeLink::External(s) => Some(s),
+        _ => None,
+    };
+    let folder = r.string()?;
+    Ok(Modifier { skin, inline_skinned, folder })
+}
+
+fn material_paths(b: &[u8]) -> Vec<(String, String)> {
+    let mut out: Vec<(String, String)> = Vec::new();
+    let mut prev: Option<(usize, String)> = None;
+    let mut p = 0;
+    while p + 4 <= b.len() {
+        let n = u32::from_le_bytes(b[p..p + 4].try_into().unwrap()) as usize;
+        if (1..400).contains(&n) && p + 4 + n <= b.len() {
+            let s = &b[p + 4..p + 4 + n];
+            if s.iter().all(|&c| (0x20..0x7f).contains(&c)) {
+                let t = String::from_utf8_lossy(s).into_owned();
+                if t.to_ascii_lowercase().ends_with(".material.gbx") {
+                    let name = match &prev {
+                        Some((end, nm)) if *end == p => nm.clone(),
+                        _ => file_stem(&t),
+                    };
+                    if !out.iter().any(|(a, b)| *a == name && *b == t) {
+                        out.push((name, t));
+                    }
+                    prev = None;
+                } else {
+                    prev = Some((p + 4 + n, t));
+                }
+                p += 4 + n;
+                continue;
+            }
+        }
+        p += 1;
+    }
+    out
+}
+
+fn file_stem(path: &str) -> String {
+    let f = path.rsplit(['/', '\\']).next().unwrap_or(path);
+    f.split('.').next().unwrap_or("").to_string()
+}
+
+pub fn skin_materials(buf: &[u8]) -> Result<Vec<(String, String)>> {
+    let head_end = crate::unpack::parse_head(buf).context("truncated header")??.body_start;
+    Ok(material_paths(&buf[..head_end]))
+}
+
+pub fn skin_files(buf: &[u8]) -> Result<Vec<(u32, String, String)>> {
+    let c = gearbox_gbx::container::Container::parse(buf)?;
+    anyhow::ensure!(c.class_id == 0x090f4000, "not a game skin");
+    let mut r = Reader::new(c.header_chunk(0x090f4000).context("game skin header absent")?);
+    let version = r.u8()?;
+    anyhow::ensure!(version <= 8, "game skin header version {version}");
+    r.string()?;
+    if version >= 1 {
+        r.string()?;
+        r.string()?;
+    }
+    let n = r.u8()?;
+    (0..n)
+        .map(|_| {
+            let entry = (r.u32()?, r.string()?, r.string()?);
+            if version >= 2 {
+                r.bool32()?;
+            }
+            Ok(entry)
+        })
+        .collect()
+}
+
+pub fn replacement(
+    material: &str,
+    folder: &str,
+    skin_folder: Option<&str>,
+    skinned: &[(String, String)],
+) -> Option<String> {
+    let norm = |s: &str| s.replace('/', "\\").to_lowercase();
+    let (name, _) = skinned.iter().find(|(_, p)| norm(p) == norm(material))?;
+    let (folder, name) = match name.strip_prefix('*') {
+        Some(n) => (skin_folder.unwrap_or(folder), n),
+        None => (folder, name.as_str()),
+    };
+    if folder.is_empty() {
+        return None;
+    }
+    Some(format!("{folder}{name}.Material.Gbx"))
+}

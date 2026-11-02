@@ -1,0 +1,27 @@
+{
+  "schema": "tm2020_linux_headless_portability_v1",
+  "upstreamRevision": "e0583ee55168e950a65a645778e591bd26b6a0f2",
+  "engineSourceFilesUnchanged": 121,
+  "portabilityEdits": {
+    "packages/gbx/Cargo.toml": {
+      "beforeSha256": "dfbdf87ac3c28ccacf865952da05433e05cfb30282c7452240fcd0cc9ba727ac",
+      "afterSha256": "5a77c5eee4356960b01a8a1a4d0e9669237f859ddafb903afafb7726b661c57b"
+    },
+    "packages/packs/Cargo.toml": {
+      "beforeSha256": "19c9c969437c81bf97955563d8e59219683797c0089d36e671ecbda49602cc28",
+      "afterSha256": "de065e8d88df2b5c22eb3f658145cff67289c58e85f2ec49593426020a2a4af8"
+    },
+    "packages/packs/src/lib.rs": {
+      "beforeSha256": "f814160e093cfa0efccb85258854907ec007905344bbf6b0ed0e4c3cf6287618",
+      "afterSha256": "d0241f561ee1a4f6264c90dc96c70b00416e8428fc0b316930cb63174a8a13be"
+    },
+    "packages/packs/src/catalog.rs": {
+      "beforeSha256": "cee52b6605a2a1f20839071348e5ca2abffa2c846e1481eb9c53947336848d2f",
+      "afterSha256": "9f9dc3658554c000f57cde18961eacd19d8d0e8dc9dee5c02943e956b5949843"
+    },
+    "packages/gbx/src/map/embedded.rs": {
+      "beforeSha256": "6c6bf884076d7b77da29e79b7d1382762469097207692edabdf968db56411efd",
+      "afterSha256": "20df88def6be85f4bd16e2a5806c267e268bcc3cd59a46da714efbbab682bc09"
+    }
+  }
+}

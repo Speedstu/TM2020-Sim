@@ -1,0 +1,43 @@
+[package]
+name = "tm2020-gearbox-extensions"
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.99"
+license = "GPL-3.0-or-later"
+publish = false
+
+[workspace]
+
+[[bin]]
+name = "tm2020-gearbox-extended-host"
+path = "../../cache/gearbox-extension-host-main.rs"
+
+[[bin]]
+name = "geometry_oracle_probe"
+path = "oracle_probe.rs"
+
+[[bin]]
+name = "replay_audit"
+path = "../gearbox-host/src/bin/replay_audit.rs"
+
+[[bin]]
+name = "physics_asset_catalog"
+path = "asset_catalog.rs"
+
+[dependencies]
+anyhow = "1"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+gearbox-engine = { git = "https://github.com/Mergemat/gearbox", rev = "e0583ee55168e950a65a645778e591bd26b6a0f2" }
+gearbox-world = { git = "https://github.com/Mergemat/gearbox", rev = "e0583ee55168e950a65a645778e591bd26b6a0f2" }
+gearbox-net = { git = "https://github.com/Mergemat/gearbox", rev = "e0583ee55168e950a65a645778e591bd26b6a0f2" }
+gearbox-trace = { git = "https://github.com/Mergemat/gearbox", rev = "e0583ee55168e950a65a645778e591bd26b6a0f2" }
+gearbox-gbx = { git = "https://github.com/Mergemat/gearbox", rev = "e0583ee55168e950a65a645778e591bd26b6a0f2" }
+gearbox-run = { git = "https://github.com/Mergemat/gearbox", rev = "e0583ee55168e950a65a645778e591bd26b6a0f2" }
+gearbox-packs = { git = "https://github.com/Mergemat/gearbox", rev = "e0583ee55168e950a65a645778e591bd26b6a0f2" }
+
+[patch."https://github.com/Mergemat/gearbox"]
+gearbox-engine = { path = "../../cache/gearbox-extensions-0.34-v2/packages/engine" }
+
+[profile.release]
+debug = 1

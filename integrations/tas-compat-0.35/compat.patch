@@ -1,0 +1,22 @@
+diff --git a/tools/.cargo/config.toml b/tools/.cargo/config.toml
+index d9de38a0..27913e01 100644
+--- a/tools/.cargo/config.toml
++++ b/tools/.cargo/config.toml
+@@ -14,4 +14,4 @@
+ # znver4 (AVX-512, the EPYC Genoa boxes): the giant's 4-direction bench 2.82 → 2.68 s over x86-64-v3, bit-identical
+ # (the harness dump, the tiny-16 and giant-8 files); a binary built with it does not run on older CPUs — build with
+ # RUSTFLAGS="-C target-cpu=x86-64-v3" for those. Fat LTO + one codegen unit gave nothing (measured).
+-rustflags = ["-C", "target-cpu=znver4"]
++rustflags = ["-C", "target-cpu=x86-64-v3"]
+diff --git a/tools/search/forkshim/src/lib.rs b/tools/search/forkshim/src/lib.rs
+index c81d04a5..e1b01c78 100644
+--- a/tools/search/forkshim/src/lib.rs
++++ b/tools/search/forkshim/src/lib.rs
+@@ -60,6 +60,6 @@ extern "C" {
+     fn fflush(f: *mut c_void) -> c_int;
+     fn setvbuf(f: *mut c_void, buf: *mut c_char, mode: c_int, size: usize) -> c_int;
+     fn poll(fds: *mut PollFd, n: u64, timeout: c_int) -> c_int;
+-    fn open(path: *const c_char, flags: c_int, mode: c_int) -> c_int;
++    fn open(path: *const c_char, flags: c_int, ...) -> c_int;
+     static mut stdout: *mut c_void;
+ }

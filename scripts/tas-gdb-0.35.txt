@@ -1,0 +1,4 @@
+run
+x/12i $pc-16
+x/24bx $pc-8
+bt

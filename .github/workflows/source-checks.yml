@@ -1,0 +1,11 @@
+name: Source build and owned tests
+on: [push, pull_request]
+permissions:
+  contents: read
+jobs:
+  native:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build SDK, vector wrapper and controller; run autonomous tests
+        run: python3 scripts/build_source_checkout.py --native-only --jobs 2

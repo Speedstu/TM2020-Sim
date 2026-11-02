@@ -1,0 +1,42 @@
+[package]
+name = "tm2020-generalist-training"
+version = "0.39.0"
+edition = "2024"
+license = "GPL-3.0-or-later"
+publish = false
+
+[workspace]
+
+[lib]
+name = "tm2020_generalist"
+path = "environment.rs"
+crate-type = ["cdylib", "rlib"]
+
+[features]
+default = []
+minimum-time = []
+progress-shaping = []
+
+[dependencies]
+anyhow = "1"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+rayon = "1"
+gearbox-engine = { path = "../../third_party/gearbox/packages/engine" }
+gearbox-world = { path = "../../third_party/gearbox/packages/world" }
+gearbox-gbx = { path = "../../third_party/gearbox/packages/gbx" }
+gearbox-net = { path = "../../third_party/gearbox/packages/net" }
+gearbox-run = { path = "../../third_party/gearbox/packages/run" }
+gearbox-trace = { path = "../../third_party/gearbox/packages/trace" }
+gearbox-packs = { path = "../../third_party/gearbox/packages/packs" }
+
+[patch.crates-io]
+lzokay-native = { path = "../fast-training/lzo" }
+
+[profile.release]
+lto = "thin"
+codegen-units = 1
+
+[[bin]]
+name = "tm2020-generalist-dataset"
+path = "dataset.rs"

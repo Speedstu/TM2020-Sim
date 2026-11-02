@@ -1,0 +1,44 @@
+{
+  "updated": "2026-11-02",
+  "requestedState": "paused",
+  "controller": "map-specific hardcode with physical feedback and normal 100 Hz input history",
+  "trainingRoots": [
+    "local/training/hardcode-human-0.75",
+    "local/training/hardcode-human-0.76-prep"
+  ],
+  "legacyService": "tm2020-hardcode-inputs.service",
+  "historicalMonitor": "tm2020-training-monitor.timer",
+  "paths": {
+    "trainer": "scripts/train_hardcode_recorded_inputs.py",
+    "campaign": "scripts/run_hardcode_human_campaign.py",
+    "audit": "scripts/audit_hardcode_execution.py",
+    "controller": "native/src/trajectory_hybrid.cpp",
+    "runtime": "integrations/generalist-training/runtime.cpp",
+    "vectorPhysics": "integrations/generalist-training/vector_physics.cpp",
+    "nativeBuild": "native/build-hardcode-0.72",
+    "physicsLibrary": "local/training/hybrid-speed-0.58/native/libtm2020_speed.so",
+    "runtimeDeployment": "local/recon/deployment-0.74-client-reset",
+    "humanCohort": "local/training/human-rework-0.70/top100-cohort",
+    "humanProfiles": "local/training/hardcode-human-0.75/rhythm-profiles",
+    "verified01": "local/recon/offline-human01-20261101/champion-trial-02/client-run-proof.json",
+    "verified02": "local/recon/human02-20261101/trial-01/client-run-proof.json"
+  },
+  "frozenModels": [
+    {
+      "map": "01",
+      "path": "local/training/hardcode-human-0.74/sim-candidates/01/human-top10.tmhyb",
+      "sha256": "cba791f62a092d3204f8cfb4937fe25a2643aef2d27a73dacc392deb788f00ec"
+    },
+    {
+      "map": "02",
+      "path": "local/recon/human02-20261101/candidate.tmhyb",
+      "sha256": "1d7d73453dc69fabf9b6d6531ac8443ac3e074ee901119814865b4f7c1a10e15"
+    }
+  ],
+  "knownLimitations": [
+    "Client runtime detachment after finish failed; restart client before another injection.",
+    "Full live physical trace unavailable for these trials; simulation/replay parity is documented separately.",
+    "Human style is a measured statistical proxy, not proven indistinguishability.",
+    "The full 25-map human Top100/Top10 campaign is not qualified."
+  ]
+}

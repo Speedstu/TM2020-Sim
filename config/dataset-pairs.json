@@ -1,0 +1,30 @@
+{
+  "source": "TMTAS Exchange Trackmania 2020 public tracks/replays API",
+  "verifiedOn": "2026-10-20",
+  "pairs": [
+    {
+      "replayId": 5006,
+      "trackId": 4032,
+      "tmxId": 365553,
+      "mapUid": "6TB_S2WaZ1vnunTe0jlwb2zMUt4"
+    },
+    {
+      "replayId": 4992,
+      "trackId": 3979,
+      "tmxId": 361930,
+      "mapUid": "329LW2no6y6MSODVtejfO19yaMd"
+    },
+    {
+      "replayId": 5009,
+      "trackId": 4035,
+      "tmxId": 364956,
+      "mapUid": "rRKt6rGHoDxmaDcnC0dPYRqZj72"
+    },
+    {
+      "replayId": 4988,
+      "trackId": 4022,
+      "tmxId": 2154,
+      "mapUid": "5weePaThiuxiK4mSHOCokBV6bTg"
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+[package]
+name = "tm2020-official-tape"
+version = "0.36.0"
+edition = "2021"
+license = "MIT"
+publish = false
+
+[workspace]
+
+[[bin]]
+name = "tm2020-official-tape"
+path = "tape.rs"
+
+[dependencies]
+fk = { path = "../../cache/trackmania-tas-compat-0.35/tools/fk/fk" }
+gbx = { path = "../../cache/trackmania-tas-compat-0.35/tools/gbx" }

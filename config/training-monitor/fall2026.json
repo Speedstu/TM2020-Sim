@@ -1,0 +1,199 @@
+{
+  "schema": "tm2020_hourly_monitor_config_v1",
+  "directory": "/home/uwucode/Projects/Trackmania2020-RE/local/monitoring/fall2026",
+  "campaign": "Fall 2026",
+  "campaignSource": "https://trackmania.io/api/campaign/seasonal/157584",
+  "library": "/home/uwucode/Projects/Trackmania2020-RE/cache/reward-study-target/release/libtm2020_speed.so",
+  "initialActive": {
+    "name": "Fall 2026 - 01",
+    "mapUid": "ypPmohQofd72MyTsIsijKfrJH98",
+    "authorScore": 22926,
+    "fileUrl": "https://core.trackmania.nadeo.live/maps/28ccb484-72ab-40d5-bb3c-653ca554ceb0/file",
+    "map": "/home/uwucode/Projects/Trackmania2020-RE/local/campaign-2026-autumn/Autumn-2026-01.Map.Gbx",
+    "sourceReplay": "/home/uwucode/Projects/Trackmania2020-RE/local/replays/tmtas-4634.Replay.Gbx",
+    "index": 0,
+    "session": "/home/uwucode/Projects/Trackmania2020-RE/local/training/fall01-ppo-speed-continuous",
+    "seed": 971042,
+    "horizon": 4000
+  },
+  "maps": [
+    {
+      "name": "Fall 2026 - 01",
+      "mapUid": "ypPmohQofd72MyTsIsijKfrJH98",
+      "authorScore": 22926,
+      "fileUrl": "https://core.trackmania.nadeo.live/maps/28ccb484-72ab-40d5-bb3c-653ca554ceb0/file",
+      "map": "/home/uwucode/Projects/Trackmania2020-RE/local/campaign-2026-autumn/Autumn-2026-01.Map.Gbx",
+      "sourceReplay": "/home/uwucode/Projects/Trackmania2020-RE/local/replays/tmtas-4634.Replay.Gbx"
+    },
+    {
+      "name": "Fall 2026 - 02",
+      "mapUid": "kG3Rv5UyAgqu9e05ive6SIOei59",
+      "authorScore": 22622,
+      "fileUrl": "https://core.trackmania.nadeo.live/maps/0890717e-0a8d-4f5d-810b-b4a46c776129/file",
+      "map": "/home/uwucode/Projects/Trackmania2020-RE/local/campaign-2026-autumn/Autumn-2026-02.Map.Gbx"
+    },
+    {
+      "name": "Fall 2026 - 03",
+      "mapUid": "kFAkAeGS10_LZqazKRtwTClKAWa",
+      "authorScore": 21975,
+      "fileUrl": "https://core.trackmania.nadeo.live/maps/20f28e3c-225b-437b-9981-132ea92fec81/file",
+      "map": "/home/uwucode/Projects/Trackmania2020-RE/local/campaign-2026-autumn/Autumn-2026-03.Map.Gbx"
+    },
+    {
+      "name": "Fall 2026 - 04",
+      "mapUid": "86Gl5t02hAzSD7oiiGjzi9p3wN9",
+      "authorScore": 23438,
+      "fileUrl": "https://core.trackmania.nadeo.live/maps/4ff59bea-1214-4726-875a-df7d87bc3015/file",
+      "map": "/home/uwucode/Projects/Trackmania2020-RE/local/campaign-2026-autumn/Autumn-2026-04.Map.Gbx"
+    },
+    {
+      "name": "Fall 2026 - 05",
+      "mapUid": "v96wCr7mP5xEGxNLSnZC6DAp4se",
+      "authorScore": 23997,
+      "fileUrl": "https://core.trackmania.nadeo.live/maps/0c5762ff-8484-4ec2-b592-9db88de722ce/file",
+      "map": "/home/uwucode/Projects/Trackmania2020-RE/local/campaign-2026-autumn/Autumn-2026-05.Map.Gbx"
+    },
+    {
+      "name": "Fall 2026 - 06",
+      "mapUid": "cLYaG2Zgsxgui3s2GsVLs_KB1e6",
+      "authorScore": 29175,
+      "fileUrl": "https://core.trackmania.nadeo.live/maps/7f2bca90-745b-4c90-8c44-a1df66b2c5be/file",
+      "map": "/home/uwucode/Projects/Trackmania2020-RE/local/campaign-2026-autumn/Autumn-2026-06.Map.Gbx"
+    },
+    {
+      "name": "Fall 2026 - 07",
+      "mapUid": "8hy1I_EGrEJQQZS8SN3S3rZoHnj",
+      "authorScore": 31425,
+      "fileUrl": "https://core.trackmania.nadeo.live/maps/5783016f-ed0a-4fa4-bd6e-09e7d1e9cb23/file",
+      "map": "/home/uwucode/Projects/Trackmania2020-RE/local/campaign-2026-autumn/Autumn-2026-07.Map.Gbx"
+    },
+    {
+      "name": "Fall 2026 - 08",
+      "mapUid": "6HxhQPmuTq3k9aqLYUCKzyveyrj",
+      "authorScore": 30316,
+      "fileUrl": "https://core.trackmania.nadeo.live/maps/a765e522-5f92-4f3c-9da6-d01245185bee/file",
+      "map": "/home/uwucode/Projects/Trackmania2020-RE/local/campaign-2026-autumn/Autumn-2026-08.Map.Gbx"
+    },
+    {
+      "name": "Fall 2026 - 09",
+      "mapUid": "RnjnOu0fwna8i3hjnRT1Wnuxqz2",
+      "authorScore": 29558,
+      "fileUrl": "https://core.trackmania.nadeo.live/maps/d660ab34-1cd2-4b44-966b-8212f0bc3884/file",
+      "map": "/home/uwucode/Projects/Trackmania2020-RE/local/campaign-2026-autumn/Autumn-2026-09.Map.Gbx"
+    },
+    {
+      "name": "Fall 2026 - 10",
+      "mapUid": "bhUUSH5VObphEXdiTefufnQRgqe",
+      "authorScore": 31298,
+      "fileUrl": "https://core.trackmania.nadeo.live/maps/9a41a740-1d95-4cfa-bab7-c636bd14a756/file",
+      "map": "/home/uwucode/Projects/Trackmania2020-RE/local/campaign-2026-autumn/Autumn-2026-10.Map.Gbx"
+    },
+    {
+      "name": "Fall 2026 - 11",
+      "mapUid": "C2gHk3vNJKbcvS9HNkcsZsXDkxf",
+      "authorScore": 33346,
+      "fileUrl": "https://core.trackmania.nadeo.live/maps/509851bc-53fe-4644-a173-9905d4147b51/file",
+      "map": "/home/uwucode/Projects/Trackmania2020-RE/local/campaign-2026-autumn/Autumn-2026-11.Map.Gbx"
+    },
+    {
+      "name": "Fall 2026 - 12",
+      "mapUid": "02b27YA4k3MWlS50A9TFGZy7Eu",
+      "authorScore": 33712,
+      "fileUrl": "https://core.trackmania.nadeo.live/maps/8b3eaceb-7a04-4318-bc6c-bd36ff9d6bb9/file",
+      "map": "/home/uwucode/Projects/Trackmania2020-RE/local/campaign-2026-autumn/Autumn-2026-12.Map.Gbx"
+    },
+    {
+      "name": "Fall 2026 - 13",
+      "mapUid": "JBzaNvC881cVdRIF2vHmBXAXX3f",
+      "authorScore": 31358,
+      "fileUrl": "https://core.trackmania.nadeo.live/maps/19ca52fd-33a5-44cb-90f1-a64679e1b3c9/file",
+      "map": "/home/uwucode/Projects/Trackmania2020-RE/local/campaign-2026-autumn/Autumn-2026-13.Map.Gbx"
+    },
+    {
+      "name": "Fall 2026 - 14",
+      "mapUid": "yMT18290SqZuoemMgbjfTPEIxA",
+      "authorScore": 39023,
+      "fileUrl": "https://core.trackmania.nadeo.live/maps/4f4be499-e519-4be1-bc9c-d54e9dbbbf98/file",
+      "map": "/home/uwucode/Projects/Trackmania2020-RE/local/campaign-2026-autumn/Autumn-2026-14.Map.Gbx"
+    },
+    {
+      "name": "Fall 2026 - 15",
+      "mapUid": "bYG3jvXV8_FdQvihFN1II3vIU0g",
+      "authorScore": 31572,
+      "fileUrl": "https://core.trackmania.nadeo.live/maps/a20014bb-b379-49b6-882c-ff5acbe30314/file",
+      "map": "/home/uwucode/Projects/Trackmania2020-RE/local/campaign-2026-autumn/Autumn-2026-15.Map.Gbx"
+    },
+    {
+      "name": "Fall 2026 - 16",
+      "mapUid": "329LW2no6y6MSODVtejfO19yaMd",
+      "authorScore": 54678,
+      "fileUrl": "https://core.trackmania.nadeo.live/maps/74284184-1d11-481e-89cf-0d5b14b63744/file",
+      "map": "/home/uwucode/Projects/Trackmania2020-RE/local/campaign-2026-autumn/Autumn-2026-16.Map.Gbx"
+    },
+    {
+      "name": "Fall 2026 - 17",
+      "mapUid": "cHm6_B17YvXb9Sb6sJnWKZBzmbi",
+      "authorScore": 47512,
+      "fileUrl": "https://core.trackmania.nadeo.live/maps/10be9c2e-abb5-4ef7-a59d-d7599e17de6f/file",
+      "map": "/home/uwucode/Projects/Trackmania2020-RE/local/campaign-2026-autumn/Autumn-2026-17.Map.Gbx"
+    },
+    {
+      "name": "Fall 2026 - 18",
+      "mapUid": "DtZod9QxwCN5W1Xb7Q_TpCUrft",
+      "authorScore": 63702,
+      "fileUrl": "https://core.trackmania.nadeo.live/maps/b0832311-2f31-43cf-98e0-7852ef5e3646/file",
+      "map": "/home/uwucode/Projects/Trackmania2020-RE/local/campaign-2026-autumn/Autumn-2026-18.Map.Gbx"
+    },
+    {
+      "name": "Fall 2026 - 19",
+      "mapUid": "n08wkWW4wuvFVnlDGhg0EQNtKn8",
+      "authorScore": 45545,
+      "fileUrl": "https://core.trackmania.nadeo.live/maps/5c02d8d8-674d-426a-9a1b-0483ae596553/file",
+      "map": "/home/uwucode/Projects/Trackmania2020-RE/local/campaign-2026-autumn/Autumn-2026-19.Map.Gbx"
+    },
+    {
+      "name": "Fall 2026 - 20",
+      "mapUid": "lHHMZkgxAw2Qdhrr7wAcP0x5Nxi",
+      "authorScore": 46768,
+      "fileUrl": "https://core.trackmania.nadeo.live/maps/5346d6c2-3333-471d-ae29-1efa9aba503a/file",
+      "map": "/home/uwucode/Projects/Trackmania2020-RE/local/campaign-2026-autumn/Autumn-2026-20.Map.Gbx"
+    },
+    {
+      "name": "Egypt 2026",
+      "mapUid": "eO5YaC9a_wks7nDc2bcIFfk7PB4",
+      "authorScore": 92795,
+      "fileUrl": "https://core.trackmania.nadeo.live/maps/d041c27b-1242-4ed9-9fd0-9c02a4a64f0a/file",
+      "map": "/home/uwucode/Projects/Trackmania2020-RE/local/campaign-2026-autumn/Autumn-2026-21.Map.Gbx"
+    },
+    {
+      "name": "United Kingdom 2026",
+      "mapUid": "FUrAZFVkgl9dZKpVFPlpvSf0plc",
+      "authorScore": 95779,
+      "fileUrl": "https://core.trackmania.nadeo.live/maps/d658ee8d-7061-4db9-b8be-7ae226ab0aed/file",
+      "map": "/home/uwucode/Projects/Trackmania2020-RE/local/campaign-2026-autumn/Autumn-2026-22.Map.Gbx"
+    },
+    {
+      "name": "Czech Republic 2026",
+      "mapUid": "V7eUfkrrczwLX33j4geGUglMBT1",
+      "authorScore": 81105,
+      "fileUrl": "https://core.trackmania.nadeo.live/maps/19acacf6-5bb0-4015-8e37-0aab3fb09b83/file",
+      "map": "/home/uwucode/Projects/Trackmania2020-RE/local/campaign-2026-autumn/Autumn-2026-23.Map.Gbx"
+    },
+    {
+      "name": "India 2026",
+      "mapUid": "nuLZ3tXpNxiZKOEprMlntvFZFub",
+      "authorScore": 79480,
+      "fileUrl": "https://core.trackmania.nadeo.live/maps/2300514f-80ef-42d9-af47-ff992e690cbc/file",
+      "map": "/home/uwucode/Projects/Trackmania2020-RE/local/campaign-2026-autumn/Autumn-2026-24.Map.Gbx"
+    },
+    {
+      "name": "New Zealand 2026",
+      "mapUid": "Cys52buy8uoYWkwroz7bbrg4_z4",
+      "authorScore": 83460,
+      "fileUrl": "https://core.trackmania.nadeo.live/maps/332d1413-f4b9-420c-9c1e-3cc43aec2daf/file",
+      "map": "/home/uwucode/Projects/Trackmania2020-RE/local/campaign-2026-autumn/Autumn-2026-25.Map.Gbx"
+    }
+  ],
+  "plateauSeconds": 3600,
+  "tuneUpdates": 40
+}

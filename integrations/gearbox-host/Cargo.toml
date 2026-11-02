@@ -1,0 +1,24 @@
+[package]
+name = "tm2020-gearbox-host"
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.99"
+license = "GPL-3.0-or-later"
+publish = false
+
+[workspace]
+
+[dependencies]
+anyhow = "1"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+gearbox-engine = { git = "https://github.com/Mergemat/gearbox", rev = "e0583ee55168e950a65a645778e591bd26b6a0f2" }
+gearbox-world = { git = "https://github.com/Mergemat/gearbox", rev = "e0583ee55168e950a65a645778e591bd26b6a0f2" }
+gearbox-net = { git = "https://github.com/Mergemat/gearbox", rev = "e0583ee55168e950a65a645778e591bd26b6a0f2" }
+gearbox-trace = { git = "https://github.com/Mergemat/gearbox", rev = "e0583ee55168e950a65a645778e591bd26b6a0f2" }
+gearbox-gbx = { git = "https://github.com/Mergemat/gearbox", rev = "e0583ee55168e950a65a645778e591bd26b6a0f2" }
+gearbox-run = { git = "https://github.com/Mergemat/gearbox", rev = "e0583ee55168e950a65a645778e591bd26b6a0f2" }
+gearbox-packs = { git = "https://github.com/Mergemat/gearbox", rev = "e0583ee55168e950a65a645778e591bd26b6a0f2" }
+
+[profile.release]
+debug = 1

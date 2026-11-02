@@ -1,0 +1,12 @@
+[package]
+name = "tm2020-sdk"
+version = "0.25.0"
+edition = "2021"
+description = "Dependency-free Windows binding for native Trackmania research policy inference"
+
+[lib]
+path = "src/lib.rs"
+
+[[example]]
+name = "policy"
+path = "examples/policy.rs"

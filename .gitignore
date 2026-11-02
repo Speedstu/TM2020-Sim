@@ -1,0 +1,53 @@
+cache/
+local/
+references/
+native/build/
+native/build-linux/
+native/tests/consumer-build/
+dist/
+backups/
+bin/
+tools/
+rust/target/
+rust/**/target/
+*.tmppo
+**/bin/
+**/obj/
+*.pak
+*.Gbx
+*.exe
+*.dll
+__pycache__/
+
+# Local compiler output; source and frozen libraries keep their paths.
+/native/build-*/
+/native/tests/consumer-build-*/
+/integrations/**/target/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Source distribution only
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+/build/
+.venv/
+
+# Rust executable entry points are sources, not build output.
+!**/src/bin/
+!**/src/bin/**
+
+# Native compiler products
+*.so
+*.a
+*.o
+*.obj
+*.lib
+*.pdb

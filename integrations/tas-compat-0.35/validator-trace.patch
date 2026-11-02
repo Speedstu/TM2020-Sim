@@ -1,0 +1,33 @@
+diff --git a/tools/fk/fk/src/cmd/trace.rs b/tools/fk/fk/src/cmd/trace.rs
+index f726af61..05f6b299 100644
+--- a/tools/fk/fk/src/cmd/trace.rs
++++ b/tools/fk/fk/src/cmd/trace.rs
+@@ -27,7 +27,8 @@
+ //! value. Five consecutive runs gave five different addresses and
+ //! byte-identical CSVs.
+ 
+-use crate::locate::{locate_v2, trajectory};
++use crate::locate::trajectory;
++use crate::validator::ValidatorCar;
+ use crate::session::{Checkpoint, Engine, Session};
+ use crate::tape::Tape;
+ use crate::traj;
+@@ -113,16 +114,15 @@ pub fn run(engine: &Engine, tape: Tape, at: Checkpoint, o: TraceOpts) -> Result<
+             }
+             let probe = s.probe_tick()?;
+             let recs = s.tape.tail_records(probe);
+-            match locate_v2(
++            match ValidatorCar::locate(
+                 &mut s.srv,
+                 probe,
+                 &recs,
+                 s.tape.start_offset_ms,
+                 bounds,
+                 2000,
+-                4000,
+                 true,
+-            ) {
++            ).map(|car| car.layout().clone()) {
+                 Ok(l) => {
+                     if !tried.is_empty() {
+                         println!(

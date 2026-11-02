@@ -1,0 +1,10 @@
+[meta]
+name = "TM2020 Physics Lab (Offline)"
+author = "Trackmania2020-RE"
+category = "Development"
+version = "0.1.0"
+
+[script]
+dependencies = ["VehicleState"]
+module = "Tm2020PhysicsLab"
+timeout = 10000
