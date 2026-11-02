@@ -1,5 +1,9 @@
 # Documentation
 
+English overview: [experiments, lessons and future PPO work](EXPERIMENTS_AND_FUTURE_PPO.md).
+The bundled champions use hardcoded control; the maintainer intends to test PPO
+again in future experiments. Historical PPO scripts are not the current champions.
+
 Commencer par le [README actuel](../README.md) et la [carte du projet](WORKSPACE.md).
 Le [rapport de nettoyage du 2 novembre](CLEANUP_2026-11-02.md) détaille les données
 conservées, les suppressions et les vérifications.

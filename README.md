@@ -9,6 +9,13 @@ Run physics without opening the game, evaluate controllers in parallel, and
 inspect steering, throttle and brake commands at **100 Hz**. Includes two
 preserved Fall 2026-01 champions and tools for human-style input analysis.
 
+**The included champions are not PPO policies.** They use deterministic,
+map-specific hardcoded trajectory tracking and physical-state feedback, tuned by
+black-box search. Both published artifacts have zero neural correction weights.
+PPO implementations and experiments are retained as research. **I intend to run
+new PPO experiments in the future**, while keeping the current champions as
+baselines. Read the [experiment history, lessons and future PPO plan](docs/EXPERIMENTS_AND_FUTURE_PPO.md).
+
 The simulator's physics and asset loading come from **[Gearbox](https://github.com/Mergemat/gearbox)**,
 by Bagautdin Omarov and contributors, pinned to
 `e0583ee55168e950a65a645778e591bd26b6a0f2`. This project adds the Linux port,
@@ -131,7 +138,9 @@ initialization data and statistical references, not a mandatory replay tape.
 Evaluation compares fixed normal and perturbed seeds before promoting a model.
 
 Start with [the hardcoded training method](docs/HUMAN_HARDCODE_0_75.md) and
-[the source-build validation](docs/SOURCE_VALIDATION.md). Full campaign searches
+[the source-build validation](docs/SOURCE_VALIDATION.md). The
+[experiment retrospective](docs/EXPERIMENTS_AND_FUTURE_PPO.md) covers what worked,
+what failed, and the intended next PPO comparisons. Full campaign searches
 require additional local maps, ghost cohorts and experiment metadata; the two
 bundled controllers do not replace that training corpus. Historical scripts and
 systemd examples are preserved for research, not enabled automatically.
