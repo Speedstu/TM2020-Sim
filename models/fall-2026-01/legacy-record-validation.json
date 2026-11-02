@@ -1,0 +1,32 @@
+{
+  "modelSha256": "89a5a0c1948e5f1be962b87d907bbc66ec9b81ae366011111e05472908c1401c",
+  "mapUid": "ypPmohQofd72MyTsIsijKfrJH98",
+  "mapSha256": "15eee4adcb2e726a336897a46f852632e8699586da4e3447ae21481d07142f08",
+  "recordSearchVersion": "0.56",
+  "referenceTimeMs": 19988,
+  "historicalTargetMs": 19986,
+  "nominal64": {
+    "count": 64,
+    "finishes": 64,
+    "targetFinishes": 64,
+    "bestMs": 19986,
+    "meanMs": 19986.0,
+    "medianMs": 19986.0,
+    "worstMs": 19986
+  },
+  "perturbed64": {
+    "count": 64,
+    "finishes": 60,
+    "targetFinishes": 29,
+    "bestMs": 19985,
+    "meanMs": 19986.533333333333,
+    "medianMs": 19987.0,
+    "worstMs": 19988
+  },
+  "originalSearchReportGameVerified": false,
+  "userReportedWorldRecordAtTheTime": true,
+  "officialWorldRecordIndependentlyVerified": false,
+  "currentOnlineRankVerified": false,
+  "ordinaryReplayHumanInputsQualified": false,
+  "scope": "Retained historical record controller, hash-identical to the model staged in the user's 0.56 client session. Simulation results are distinct from official leaderboard validation."
+}

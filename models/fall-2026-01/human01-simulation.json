@@ -1,0 +1,14 @@
+{
+  "champion": "human01",
+  "modelSha256": "cba791f62a092d3204f8cfb4937fe25a2643aef2d27a73dacc392deb788f00ec",
+  "mapUid": "ypPmohQofd72MyTsIsijKfrJH98",
+  "seed": 26769133,
+  "controlMode": "normal-recorded-inputs",
+  "finishMs": 19995,
+  "checkpoints": 4,
+  "ticks": 2000,
+  "defaultSeedResultMatches": true,
+  "gameStarted": false,
+  "trainingStarted": false,
+  "onlineRankVerified": false
+}

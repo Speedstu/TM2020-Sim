@@ -1,110 +1,158 @@
-# Trackmania2020-RE
+# TM2020-Sim
 
-Simulateur Trackmania sans rendu, SDK natif C++20/Rust, contrôleur hardcodé avec
-retour physique et outils d’optimisation et d’analyse des inputs.
+**Headless Trackmania simulation, a native C++/Rust SDK, and driving-controller research.**
 
-**La physique du simulateur vient de [Gearbox](https://github.com/Mergemat/gearbox)**,
-par Bagautdin Omarov et ses contributeurs, révision
-`e0583ee55168e950a65a645778e591bd26b6a0f2`. Ce projet ajoute le port Linux,
-l’environnement vectorisé, le SDK, les contrôleurs, la recherche et les audits.
-Il ne revendique pas une rétro-ingénierie complète et indépendante du jeu.
+[![Source checks](https://github.com/Speedstu/TM2020-Sim/actions/workflows/source-checks.yml/badge.svg)](https://github.com/Speedstu/TM2020-Sim/actions/workflows/source-checks.yml)
+[![License: GPL v3+](https://img.shields.io/badge/License-GPLv3%2B-blue.svg)](LICENSE)
 
-## Contenu
+Run physics without opening the game, evaluate controllers in parallel, and
+inspect steering, throttle and brake commands at **100 Hz**. Includes two
+preserved Fall 2026-01 champions and tools for human-style input analysis.
 
-| Dossier | Rôle |
-|---|---|
-| `third_party/gearbox/` | Sources GPL du moteur et du chargeur d’assets, port Linux figé |
-| `integrations/fast-training/` | Simulateur headless et première collecte PPO native |
-| `integrations/generalist-training/` | Adaptateur physique, états, vectorisation et runtime client |
-| `integrations/speed-training/` | Bibliothèque physique utilisée pour les expériences de vitesse |
-| `native/include/`, `native/src/`, `native/tests/` | SDK C++, contrôleur, interfaces et tests |
-| `sdk/`, `rust/`, `src/` | Interfaces supplémentaires, binding Rust et outils GBX |
-| `scripts/` | Training, recherche hardcodée, décodage et audits |
-| `docs/` | Architecture, méthodes et notes historiques |
-| `config/` | Configurations d’expériences et exemples de services |
+The simulator's physics and asset loading come from **[Gearbox](https://github.com/Mergemat/gearbox)**,
+by Bagautdin Omarov and contributors, pinned to
+`e0583ee55168e950a65a645778e591bd26b6a0f2`. This project adds the Linux port,
+vectorized environments, native SDK, controllers, optimization and validation
+tools. It does not claim an independently reverse-engineered complete game.
 
-Ce dépôt est un **instantané des sources**. Il ne contient pas les Packs ou
-exécutables propriétaires du jeu, maps, replays personnels, champions,
-checkpoints, compilateurs ou environnements Python installés. Les sources
-Gearbox nécessaires au simulateur principal sont incluses avec leur licence.
+## What's included
 
-## Compiler sur Linux x86-64
+- **Headless physics:** native 10 ms ticks, full resets, checkpoints and finish events.
+- **Parallel environments:** a C++ batch API over the Rust physics backend.
+- **Native SDK:** C++20 interfaces, C ABI, Rust bindings and autonomous regression tests.
+- **Driving controllers:** trajectory tracking with physical-state feedback and optional learned corrections.
+- **Human-style controls:** binary pedals, quantized steering, input-history handling and contextual action constraints.
+- **Research tools:** hardcoded-controller search, historical PPO experiments, replay decoding and matched-seed evaluation.
 
-Prérequis : Python 3.10+, CMake 3.21+, compilateur C++20, Rust/Cargo 1.98+,
-et `liblzo2.so.2`. Les premières compilations Cargo téléchargent les dépendances
-des lockfiles. Aucun compte, jeu ouvert ou entraînement n’est nécessaire pour
-compiler et exécuter les tests autonomes.
+Physics runs on the **CPU**. Optional PPO branches can use CUDA for neural-network
+optimization. The current champion branch uses map-specific hardcoded tracking;
+it is not a universal policy that discovers an unseen track from scratch.
+
+## Included champions
+
+| Fall 2026-01 model | Preserved result | Input mode |
+|---|---|---|
+| [Human-style champion](models/fall-2026-01/) | **19.995 s** in the client, zero respawns; replay inputs matched in simulation | Normal recorded inputs at 100 Hz |
+| [Legacy record champion](models/fall-2026-01/) | **19.986 s**, 64/64 nominal simulation finishes | Historical direct physical controls |
+
+Both original `.tmhyb` artifacts are included with checksums, evaluation seeds,
+mode information and validation summaries. The legacy model is the retained
+controller from the earlier user-reported world-record session. The stored
+search evidence does not independently certify an official record or current
+online rank. It does not carry the human model's input qualification.
+
+The human model's measured input statistics fell within the retained Top-100
+cohort's P10–P90 ranges. This does not establish human origin or visual
+indistinguishability. See [champion details and reproduction](models/fall-2026-01/README.md).
+
+## Quick start — Linux x86-64
+
+Requirements: Python 3.10+, CMake 3.21+, a C++20 compiler, Rust/Cargo 1.98+,
+and `liblzo2.so.2`. Cargo downloads the locked dependencies on the first build.
 
 ```sh
-# Exemple Debian/Ubuntu : outils système
+git clone https://github.com/Speedstu/TM2020-Sim.git
+cd TM2020-Sim
+
+# Debian/Ubuntu system dependencies
 sudo apt install build-essential cmake pkg-config liblzo2-dev
 
-# Compiler SDK, physique, contrôleur et outils de décodage, puis tests autonomes
+# Build the SDK, simulator, controller and decoding tools; run native tests
 python3 scripts/build_source_checkout.py --jobs 4
+
+# Python controller/analysis helpers
+python3 -m venv .venv
+.venv/bin/pip install -r requirements.txt
 ```
 
-La commande produit les bibliothèques sous `build/` et `cache/`, sans modifier
-une installation Trackmania. Ajouter `--offline` si les dépendances Cargo sont
-déjà téléchargées, ou `--native-only` pour compiler uniquement la partie C++.
+The build does not start training, launch the game or modify a game installation.
+Use `--native-only` for the C++ subset, or `--offline` when Cargo dependencies
+are already cached. Build products are stored under `build/` and `cache/`.
 
-## Faire tourner la physique
+### Run a champion in the simulator
 
-Fournir ses propres fichiers Trackmania : une map et le dossier `Packs`
-contenant notamment `Stadium.pak`. Exemple de test de chargement et de pas physiques :
+Provide your own exact Fall 2026-01 map and your installed game's `Packs` folder:
+
+```sh
+.venv/bin/python scripts/run_bundled_champion.py \
+  --champion human01 \
+  --map /path/to/Autumn-2026-01.Map.Gbx \
+  --packs /path/to/Trackmania/Packs
+```
+
+Use `--champion legacy-record01` for the historical record controller. The runner
+selects the correct input mode and original seed, validates the map/model hashes,
+and reports finish time and checkpoints. It runs in the simulator only.
+
+### Load a different map and benchmark physics
 
 ```sh
 cache/source-fast-target/release/tm2020-fast-probe \
-  /chemin/vers/map.Map.Gbx /chemin/vers/Trackmania/Packs
+  /path/to/map.Map.Gbx /path/to/Trackmania/Packs
 ```
 
-Le probe accélère tout droit pour mesurer le moteur ; ce n’est pas une run du
-contrôleur entraîné. Le moteur avance à 100 Hz ; les arrivées et checkpoints
-proviennent des événements simulés. La physique est exécutée sur CPU. Les
-anciennes branches PPO peuvent employer CUDA pour l’optimisation du réseau.
+This probe applies full throttle and measures physics throughput; it is not a
+trained driving policy. The local source-build check measured about **51k physics
+ticks/s** for this probe on the research PC. That is not end-to-end PPO training SPS.
 
-## Contrôleur et entraînement humain
+## What are game assets?
 
-La branche la plus récente conserve le hardcode comme moteur principal. Elle
-optimise trajectoire de référence, gains de correction et rythmes gaz/frein.
-Les ghosts servent de données d’initialisation et de comparaison. Les commandes
-sont soumises à un gouverneur avant leur application physique, avec pédales
-binaires et direction quantifiée à 100 Hz.
+The simulator reads external files from a legitimate Trackmania installation:
 
-Sources principales :
+- **`Packs/*.pak`:** proprietary block geometry, collision shapes, vehicle tuning
+  and other game resources. The `Packs` folder must include `Stadium.pak`.
+- **`.Map.Gbx` tracks:** the map layout and referenced blocks/objects.
+- **Optional `.Replay.Gbx` / `.Ghost.Gbx` files:** recorded runs used for analysis
+  and validation. Some replay files also embed the map.
 
-- [Contrôleur partagé](native/src/trajectory_hybrid.cpp)
-- [Recherche hardcodée](scripts/train_hardcode_recorded_inputs.py)
-- [Ordonnancement de campagne](scripts/run_hardcode_human_campaign.py)
-- [Audit des départs normaux et perturbés](scripts/audit_hardcode_execution.py)
-- [Méthode et limites](docs/HUMAN_HARDCODE_0_75.md)
+These game files and game executables are **not distributed here**. Install the
+game and supply your own map path. The bundled champion files are controller
+parameters/reference data; they do not contain the game's Packs or a map file.
+Gearbox's open-source code is included separately under `third_party/`.
 
-Les expériences historiques de campagne attendent des données locales sous
-`local/` : elles ne peuvent pas reprendre un champion à partir de ce seul dépôt.
-Le script de build reconstruit les bibliothèques ; il ne reconstruit pas les
-checkpoints ni le corpus de ghosts. Aucun training ne démarre automatiquement.
-Les fichiers systemd sont des exemples historiques, pas des services à activer
-en bloc.
+## Repository layout
 
-## Validation et limites
+| Path | Purpose |
+|---|---|
+| `third_party/gearbox/` | Pinned GPL physics and asset-loader sources, with Linux portability edits |
+| `integrations/` | Rust environments, C++ vectorization, training and client adapters |
+| `native/include/`, `native/src/`, `native/tests/` | Native SDK, controllers and tests |
+| `sdk/`, `rust/`, `src/` | Additional SDK interfaces, Rust binding and GBX tools |
+| `models/fall-2026-01/` | Human-style and legacy-record champions, checksums and summaries |
+| `scripts/` | Builds, controller search, replay analysis and audits |
+| `docs/` | Architecture, methods, validation and historical research notes |
+| `config/` | Experiment configurations and historical service examples |
 
-Des essais locaux du projet ont produit 19,995 s sur Fall 2026-01 et 21,328 s sur
-Fall 2026-02, avec inputs clients décodés à 100 Hz et temps reproduits dans le
-simulateur. Ces artefacts locaux ne sont pas inclus dans ce dépôt. Ces résultats
-ne prouvent ni une équivalence physique universelle, ni une IA forte sur les maps
-inconnues, ni la qualification humaine/Top 10 des 25 maps.
+## Training and validation
 
-Le runtime client et son chargeur sont des outils de recherche pour essais
-locaux/hors ligne. Un défaut connu de détachement après l’arrivée impose encore
-un redémarrage du client avant une nouvelle injection. La compilation et les
-tests autonomes ne constituent pas une validation client.
+The current research optimizes reference trajectories, feedback gains and pedal
+rhythms while constraining actual applied actions. Human ghosts provide
+initialization data and statistical references, not a mandatory replay tape.
+Evaluation compares fixed normal and perturbed seeds before promoting a model.
 
-Les notes de `docs/` sont datées. Leurs mentions de services actifs et chemins
-de preuves décrivent le poste de recherche d’origine, pas l’état de ce clone.
+Start with [the hardcoded training method](docs/HUMAN_HARDCODE_0_75.md) and
+[the source-build validation](docs/SOURCE_VALIDATION.md). Full campaign searches
+require additional local maps, ghost cohorts and experiment metadata; the two
+bundled controllers do not replace that training corpus. Historical scripts and
+systemd examples are preserved for research, not enabled automatically.
 
-## Licences et attribution
+Client integration is experimental and intended for local/offline tests. A known
+post-finish detachment fault still requires a client restart before another
+injection. Compilation and simulator tests do not certify arbitrary client
+versions or all game mechanics. Dated research notes may reference private local
+evidence that is not part of this repository.
 
-Distribution sous **GPL-3.0-or-later**, avec les attributions et licences tierces
-conservées. Voir [LICENSE](LICENSE), [THIRD_PARTY.md](THIRD_PARTY.md) et
-[l’attribution de l’adaptateur](integrations/fast-training/NOTICE.md).
-Le code du décompresseur Rust vendored conserve sa licence MIT. Le code du jeu
-et les assets propriétaires ne sont pas distribués.
+## Contributing
+
+Useful contributions include reproducible physics comparisons, controller
+robustness, input-history parity, performance measurements and portable builds.
+For a discrepancy, include the build/revision, map UID, seed, input mode and a
+minimal reproducer. Separate simulator results from actual client observations.
+
+## License and credits
+
+Distributed under **GPL-3.0-or-later**, with third-party notices preserved.
+See [LICENSE](LICENSE), [THIRD_PARTY.md](THIRD_PARTY.md), and
+[the Gearbox integration notice](integrations/fast-training/NOTICE.md).
+The vendored `lzokay-native` decoder retains its MIT license. Trackmania and its
+proprietary assets belong to their respective owners.

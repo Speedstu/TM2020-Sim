@@ -1,0 +1,30 @@
+{
+  "mapName": "Fall 2026 - 01",
+  "mapUid": "ypPmohQofd72MyTsIsijKfrJH98",
+  "mapSha256": "15eee4adcb2e726a336897a46f852632e8699586da4e3447ae21481d07142f08",
+  "artifacts": [
+    {
+      "id": "human01",
+      "file": "human.tmhyb",
+      "sha256": "cba791f62a092d3204f8cfb4937fe25a2643aef2d27a73dacc392deb788f00ec",
+      "bytes": 203927,
+      "assetSchemaVersion": 7,
+      "defaultSeed": 26769133,
+      "controlMode": "normal-recorded-inputs",
+      "expectedSeedFinishMs": 19995
+    },
+    {
+      "id": "legacy-record01",
+      "file": "legacy-record.tmhyb",
+      "sha256": "89a5a0c1948e5f1be962b87d907bbc66ec9b81ae366011111e05472908c1401c",
+      "bytes": 203671,
+      "assetSchemaVersion": 1,
+      "defaultSeed": 36139877,
+      "controlMode": "legacy-direct-physical-controls",
+      "expectedSeedFinishMs": 19986
+    }
+  ],
+  "mapOrGameAssetsIncluded": false,
+  "currentOnlineLeaderboardRankVerified": false,
+  "scope": "Two map-specific hardcoded controllers. Their control modes are part of the experiment and must not be interchanged."
+}

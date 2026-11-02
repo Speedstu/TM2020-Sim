@@ -1,0 +1,14 @@
+{
+  "champion": "legacy-record01",
+  "modelSha256": "89a5a0c1948e5f1be962b87d907bbc66ec9b81ae366011111e05472908c1401c",
+  "mapUid": "ypPmohQofd72MyTsIsijKfrJH98",
+  "seed": 36139877,
+  "controlMode": "legacy-direct-physical-controls",
+  "finishMs": 19986,
+  "checkpoints": 4,
+  "ticks": 1999,
+  "defaultSeedResultMatches": true,
+  "gameStarted": false,
+  "trainingStarted": false,
+  "onlineRankVerified": false
+}

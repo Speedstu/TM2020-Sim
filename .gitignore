@@ -51,3 +51,8 @@ htmlcov/
 *.obj
 *.lib
 *.pdb
+
+# Only curated champion artifacts are versioned.
+*.tmhyb
+!models/fall-2026-01/human.tmhyb
+!models/fall-2026-01/legacy-record.tmhyb

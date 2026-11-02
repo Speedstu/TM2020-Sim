@@ -21,3 +21,13 @@ claim a new client run or a trained model available after cloning.
 
 No game or training process was started. The GitHub workflow builds and checks
 the autonomous native subset; it does not supply proprietary assets or run a bot.
+
+## Bundled controllers
+
+Both newly bundled controller files were copied byte-for-byte from the retained
+champions and rerun with the independently rebuilt simulator. `human01` finishes
+in 19,995 ms with four checkpoints and normal recorded input history (seed
+26769133). `legacy-record01` finishes in 19,986 ms with four checkpoints in its
+historical direct-control mode (seed 36139877). Each result is recorded under
+`models/fall-2026-01/`. No client was launched and no current online rank was
+verified by these tests.

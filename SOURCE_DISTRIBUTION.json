@@ -1,15 +1,15 @@
 {
   "createdUtc": "2026-11-02T09:17:00.146454+00:00",
-  "kind": "source snapshot; no inherited private Git history",
+  "kind": "source distribution with two curated controller artifacts",
   "upstreamGearboxRevision": "e0583ee55168e950a65a645778e591bd26b6a0f2",
   "includedSourceFiles": 785,
   "excluded": [
     "game Packs and binaries",
     "maps and replays",
-    "models and training checkpoints",
     "installed tools and compiled libraries",
     "personal conversation and instructions",
-    "transfer manifests"
+    "transfer manifests",
+    "other models and full training checkpoints"
   ],
   "portabilityChanges": [
     "Cargo paths point to bundled third_party/gearbox and MIT lzokay sources",
@@ -3942,5 +3942,9 @@
       "sha256": "aec93b5637ab6d62470979a008990a4a336a287ab83a3f2541849ae735674055",
       "bytes": 197
     }
+  ],
+  "includedChampions": [
+    "models/fall-2026-01/human.tmhyb",
+    "models/fall-2026-01/legacy-record.tmhyb"
   ]
 }
