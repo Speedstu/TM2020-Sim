@@ -2,7 +2,7 @@
   "createdUtc": "2026-11-02T09:17:00.146454+00:00",
   "kind": "source distribution with two curated controller artifacts",
   "upstreamGearboxRevision": "e0583ee55168e950a65a645778e591bd26b6a0f2",
-  "includedSourceFiles": 785,
+  "includedSourceFiles": 779,
   "excluded": [
     "game Packs and binaries",
     "maps and replays",
@@ -3878,49 +3878,19 @@
       "bytes": 26361
     },
     {
-      "path": "apps/trackvis/common.py",
+      "path": "apps/trackstat/common.py",
       "sha256": "d189a061c60261cc145073e60325b7750a77692c31f8ce401089a872f5390969",
       "bytes": 13473
     },
     {
-      "path": "apps/trackvis/stats.py",
+      "path": "apps/trackstat/stats.py",
       "sha256": "4d29400325d71781b57fa75a3a207d74a848c9568eb2efd88f40be179184db41",
       "bytes": 17445
     },
     {
-      "path": "apps/trackvis/simulator.py",
-      "sha256": "fdc3f316449c1edb23d9ecab833286073b969182061baf0c8c0fc6cf2c774f3e",
-      "bytes": 6245
-    },
-    {
-      "path": "apps/trackvis/scene.py",
-      "sha256": "5b4e623283d27e9878ebf0fc0b50b741fbe430611a213f0d8b770a88d0b64b47",
-      "bytes": 5814
-    },
-    {
-      "path": "apps/trackvis/app.py",
-      "sha256": "568adf23267aade19c071a889cffc63408a625be51b8ddfeb8d15047c9fcc7e4",
-      "bytes": 15666
-    },
-    {
-      "path": "apps/trackvis/README.md",
-      "sha256": "94a4795479d7112924df6a7d22ce663a3cd0276268d95a0240c54a399423e67b",
-      "bytes": 5869
-    },
-    {
-      "path": "apps/trackvis/pursuit.py",
+      "path": "apps/trackstat/pursuit.py",
       "sha256": "0a19c017c2e5e5340b0b5bdeded71a6fd2a39f35a60092c0bf6073b3bc1f6661",
       "bytes": 9452
-    },
-    {
-      "path": "apps/trackvis/backups/common-before-pursuit-20261031.py",
-      "sha256": "40eac3b436237ceccead9148443cbb065db35c5c570edbacf42d485d5b9d9758",
-      "bytes": 12807
-    },
-    {
-      "path": "apps/trackvis/backups/stats-before-pursuit-20261031.py",
-      "sha256": "41d6ce166757a0e25654746339f7e6ee01ac97054796c1417e2a5f9ff1f8b76d",
-      "bytes": 13162
     },
     {
       "path": "openplanet/TM2020PhysicsLab/info.toml",
